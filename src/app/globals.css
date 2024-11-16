@@ -1,21 +1,95 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Import a clean, modern font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+ font-family: 'Roboto', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  /* Define color variables for consistency */
+  --primary-color: #4F46E5; /* Indigo 600 */
+  --secondary-color: #3B82F6; /* Blue 500 */
+  --bg-gradient-start: #E0E7FF; /* Light Blue */
+  --bg-gradient-end: #EFF6FF; /* Very Light Blue */
+  --text-primary: #1F2937; /* Gray 800 */
+  --text-secondary: #4B5563; /* Gray 700 */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end));
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Add a global style for button hover effects */
+button {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Default styles for headers */
+h1, h2, h3 {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Input field styling */
+input {
+  font-size: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #CBD5E0; /* Light Gray */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3); /* Indigo 600 shadow */
+  outline: none;
+}
+
+
+
+/* Define a common style for all inputs */
+input, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  resize: none; /* This can prevent resizing if desired */
+}
+
+/* Additional style if you want a consistent height */
+textarea {
+  height: 2.5rem; /* Adjust based on desired height */
+}        
+body {
+ font-family: 'Poppins', sans-serif;
+ background: linear-gradient(to bottom right, #E0E7FF, #EFF6FF); /* Light blue gradient */
+ color: #1F2937; /* Gray 800 */
+ min-height: 100vh;
+ margin: 0;
+ padding: 0;
+ display: flex;
+ justify-content: center;
+ align-items: center;
 }
