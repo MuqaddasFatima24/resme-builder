@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-// Export the Skill interface for use in other files
+// Define and export the Skill interface
 export interface Skill {
   category: string;
   name: string;
@@ -15,11 +15,7 @@ interface SkillsProps {
 }
 
 const Skills: React.FC<SkillsProps> = ({ skills, setSkills }) => {
-  const [skillName, setSkillName] = useState('');
-  const [skillLevel, setSkillLevel] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Technical');
-
-  const addSkill = () => {
+  const addSkill = (category: string, skillName: string, skillLevel: string) => {
     if (!skillName || !skillLevel) {
       console.error('Skill name and level are required');
       return;
@@ -27,61 +23,60 @@ const Skills: React.FC<SkillsProps> = ({ skills, setSkills }) => {
 
     setSkills((prev) => [
       ...prev,
-      { category: selectedCategory, name: skillName, level: skillLevel },
+      { category, name: skillName, level: skillLevel },
     ]);
-
-    setSkillName('');
-    setSkillLevel('');
   };
 
   return (
     <div className="p-8 mb-8 bg-gradient-to-br from-white to-gray-50 rounded-lg shadow-lg text-center lg:p-12">
       <h2 className="text-3xl font-semibold text-indigo-600 mb-6 lg:text-4xl">Skills</h2>
 
-      {/* Category Selection */}
-      <div className="mb-6">
-        <label className="block text-lg font-medium text-gray-700 mb-2">Select Skill Category:</label>
-        <select
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          className="w-full lg:w-1/3 p-4 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 lg:text-xl"
-        >
-          <option value="Technical">Technical Skills</option>
-          <option value="Soft">Soft Skills</option>
-          <option value="Language">Language Skills</option>
-        </select>
-      </div>
-
-      {/* Skill Input */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0 mb-6">
-        <input
-          type="text"
-          placeholder={`Enter ${selectedCategory} Skill`}
-          value={skillName}
-          onChange={(e) => setSkillName(e.target.value)}
-          className="w-full lg:w-2/3 p-4 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 lg:text-xl"
+      {/* Skill Categories */}
+      <div className="space-y-8">
+        <SkillCategory
+          title="Technical Skills"
+          placeholder="e.g., JavaScript, Python, SQL, Linux"
+          addSkill={addSkill}
+          category="Technical"
         />
-        <select
-          value={skillLevel}
-          onChange={(e) => setSkillLevel(e.target.value)}
-          className="w-full lg:w-1/3 p-4 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 lg:text-xl"
-        >
-          <option value="">Select Level</option>
-          <option value="Beginner">Beginner</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Advanced">Advanced</option>
-          <option value="Proficient">Proficient</option>
-          <option value="Expert">Expert</option>
-        </select>
+        <SkillCategory
+          title="Language Skills"
+          placeholder="e.g., English (Fluent), Spanish (Intermediate)"
+          addSkill={addSkill}
+          category="Language"
+        />
+        <SkillCategory
+          title="Soft Skills"
+          placeholder="e.g., Communication, Leadership, Problem Solving"
+          addSkill={addSkill}
+          category="Soft"
+        />
+        <SkillCategory
+          title="Creative Skills"
+          placeholder="e.g., Graphic Design, Photography, Video Editing"
+          addSkill={addSkill}
+          category="Creative"
+        />
+        <SkillCategory
+          title="Business Skills"
+          placeholder="e.g., Strategic Planning, Marketing, Project Management"
+          addSkill={addSkill}
+          category="Business"
+        />
+        <SkillCategory
+          title="Tools & Technologies"
+          placeholder="e.g., Git, Figma, Google Analytics"
+          addSkill={addSkill}
+          category="Tools"
+        />
+        <SkillCategory
+          title="Certifications"
+          placeholder="e.g., ITIL Foundation Certification, PMP"
+          addSkill={addSkill}
+          category="Certifications"
+          levelOptions={false}
+        />
       </div>
-
-      {/* Add Skill Button */}
-      <button
-        onClick={addSkill}
-        className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
-      >
-        Add {selectedCategory} Skill
-      </button>
 
       {/* Display Added Skills */}
       <div className="mt-8 text-left">
@@ -103,5 +98,63 @@ const Skills: React.FC<SkillsProps> = ({ skills, setSkills }) => {
   );
 };
 
-export default Skills;
+// SkillCategory Component for Reusable Sections
+const SkillCategory = ({
+  title,
+  placeholder,
+  addSkill,
+  category,
+  levelOptions = true,
+}: {
+  title: string;
+  placeholder: string;
+  addSkill: (category: string, skillName: string, skillLevel: string) => void;
+  category: string;
+  levelOptions?: boolean;
+}) => {
+  const [skillName, setSkillName] = useState('');
+  const [skillLevel, setSkillLevel] = useState('');
 
+  const handleAddSkill = () => {
+    addSkill(category, skillName, skillLevel);
+    setSkillName('');
+    setSkillLevel('');
+  };
+
+  return (
+    <div>
+      <h3 className="text-2xl font-semibold text-indigo-500 mb-4">{title}</h3>
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0 mb-6">
+        <input
+          type="text"
+          placeholder={placeholder}
+          value={skillName}
+          onChange={(e) => setSkillName(e.target.value)}
+          className="w-full lg:w-2/3 p-4 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 lg:text-xl"
+        />
+        {levelOptions && (
+          <select
+            value={skillLevel}
+            onChange={(e) => setSkillLevel(e.target.value)}
+            className="w-full lg:w-1/3 p-4 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 lg:text-xl"
+          >
+            <option value="">Select Level</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+            <option value="Proficient">Proficient</option>
+            <option value="Expert">Expert</option>
+          </select>
+        )}
+      </div>
+      <button
+        onClick={handleAddSkill}
+        className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
+      >
+        Add {title}
+      </button>
+    </div>
+  );
+};
+
+export default Skills;
