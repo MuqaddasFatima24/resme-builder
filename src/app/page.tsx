@@ -14,6 +14,7 @@ export default function Home() {
     name: '',
     contact: '',
     email: '',
+    phone: '',
   });
 
   const [education, setEducation] = useState<EducationItem[]>([]);

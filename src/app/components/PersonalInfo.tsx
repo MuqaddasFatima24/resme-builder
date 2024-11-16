@@ -1,53 +1,59 @@
 'use client';
 
-import React, { ChangeEvent } from 'react';
-
-interface PersonalInfo {
-  name: string;
-  email: string;
-  phone: string;
-}
+import React from 'react';
 
 interface PersonalInfoProps {
-  personalInfo: PersonalInfo;
-  setPersonalInfo: React.Dispatch<React.SetStateAction<PersonalInfo>>;
+  personalInfo: {
+    name: string;
+    contact: string;
+    email: string;
+    phone: string; // Add phone here
+  };
+  setPersonalInfo: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      contact: string;
+      email: string;
+      phone: string; // Add phone here
+    }>
+  >;
 }
 
 const PersonalInfo: React.FC<PersonalInfoProps> = ({ personalInfo, setPersonalInfo }) => {
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setPersonalInfo((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold text-indigo-600 mb-4">Personal Information</h2>
       <input
-        type="text"
         name="name"
-        placeholder="Name"
         value={personalInfo.name}
         onChange={handleChange}
-        className="w-full p-3 mb-4 border rounded-lg"
+        placeholder="Name"
       />
       <input
-        type="email"
         name="email"
-        placeholder="Email"
         value={personalInfo.email}
         onChange={handleChange}
-        className="w-full p-3 mb-4 border rounded-lg"
+        placeholder="Email"
       />
       <input
-        type="tel"
-        name="phone"
-        placeholder="Phone"
+        name="contact"
+        value={personalInfo.contact}
+        onChange={handleChange}
+        placeholder="Contact"
+      />
+      <input
+        name="phone" // Add phone input field
         value={personalInfo.phone}
         onChange={handleChange}
-        className="w-full p-3 mb-4 border rounded-lg"
+        placeholder="Phone"
       />
     </div>
   );
 };
 
 export default PersonalInfo;
+
